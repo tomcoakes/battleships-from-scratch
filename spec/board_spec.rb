@@ -12,13 +12,13 @@ describe Board do
   end
 
   it "contains only water to begin with" do
-    expect(board.grid.values).to eq([:w,:w,:w,:w])
+    expect(board.grid).to eq([[:w,:w],[:w,:w]])
   end
 
   it "can add other objects to its cells" do
     ship = double :ship
-    board.add_to_cell(:B1, ship)
-    expect(board.grid[:B1]).to eq(ship)
+    board.add_to_cell(1, 0, ship)
+    expect(board.grid).to eq([[:w,:w],[ship,:w]])
   end
 
 end
