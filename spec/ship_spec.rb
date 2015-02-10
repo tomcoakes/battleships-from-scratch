@@ -15,6 +15,4 @@ describe Ship do
     expect(ship).to be_destroyed
   end
 
-  
-
 end
