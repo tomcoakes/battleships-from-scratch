@@ -18,15 +18,15 @@ class Board
   end
 
   def ships_remaining
-    @remaining = 0
+    @ships_remaining = 0
     grid.each do |y_position|
       y_position.each do |x_position|
         if x_position.is_a?(Ship)
-          @remaining += 1 if !ship_sunk?(x_position)
+          @ships_remaining += 1 if !ship_sunk?(x_position)
         end
       end
     end
-    @remaining
+    @ships_remaining
   end
 
 
