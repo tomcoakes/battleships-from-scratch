@@ -15,25 +15,27 @@ class Board
     currently_on_cell = grid[y][x]
     register_hit_or_miss(y, x, obj, currently_on_cell) if obj.is_a?(Shot)
     grid[y][x] = obj
-    ships_placed << obj if !obj.is_a?(Shot)
-  end
-
-  def ships_placed
-    @ships_placed ||= []
   end
 
   def ships_remaining
-    1
+    @remaining = 0
+    grid.each do |first_level|
+      first_level.each do |cell|
+        if cell.is_a?(Ship)
+          if !ship_sunk?(cell)
+            @remaining += 1
+          end
+        end
+      end
+    end
+    @remaining
   end
 
-  # Could I use inject (but in reverse)?
 
-  def check_ship_status(ship)
-    if ship.sunk? == true
-      return "sunk"
-    else
-      return "floating"
-    end
+# This method is just here so that I'm injecting the dependency
+# rather than directly accessing a ship method within a board method
+  def ship_sunk?(ship)
+    ship.sunk?
   end
 
 private

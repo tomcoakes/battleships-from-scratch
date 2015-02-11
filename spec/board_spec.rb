@@ -42,28 +42,19 @@ describe Board do
     board.add_to_cell(0, 0, shot)
   end
 
-  it "knows how many remaining ships are on the board" do
+  it "knows how many ships remain on the board" do
+    allow(ship).to receive(:is_a?).and_return(false)
     board.add_to_cell(0, 0, ship)
+    allow(ship).to receive(:is_a?).and_return(true)
     expect(board.ships_remaining).to eq(1)
   end
 
   it "can check that a sunk ship has been sank" do
-    expect(board.check_ship_status(destroyed_ship)).to eq("sunk")
+    expect(destroyed_ship).to be_sunk
   end
 
   it "can check that a floating ship is still floating" do
-    expect(board.check_ship_status(ship)).to eq("floating")
-  end
-
-  it "keeps a list of all the ships that have been placed" do
-    board.add_to_cell(0, 0, ship)
-    expect(board.ships_placed).to eq([ship])
-  end
-
-  it "doesn't include shots in the list of ships placed" do
-    expect(shot).to receive(:register_miss) 
-    board.add_to_cell(0, 1, shot)
-    expect(board.ships_placed).to eq([])
+    expect(ship).not_to be_sunk
   end
 
   # it "updates the number of remaining ships when a ship is destroyed" do
