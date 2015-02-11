@@ -27,7 +27,6 @@ private
         obj.register_hit
         currently_on_cell.hit
       end
-
     end
   end
 

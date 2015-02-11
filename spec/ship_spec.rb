@@ -2,32 +2,32 @@ require 'ship'
 
 describe Ship do
 
-  let(:ship) {Ship.new(1)}
-  let(:large_ship) {Ship.new(2)}
+  let(:dinghy) {Ship.dinghy}
+  let(:patrol_boat) {Ship.patrol_boat}
 
   it "knows its size" do
-    expect(ship.size).to eq(1)
+    expect(dinghy.size).to eq(1)
   end
 
   it "should know when it's been hit once" do
-    large_ship.hit
-    expect(large_ship.hits).to eq(1)
+    patrol_boat.hit
+    expect(patrol_boat.hits).to eq(1)
   end
 
   it "should know when it's been hit twice" do
-    large_ship.hit
-    large_ship.hit
-    expect(large_ship.hits).to eq(2)
+    patrol_boat.hit
+    patrol_boat.hit
+    expect(patrol_boat.hits).to eq(2)
   end
 
   it "should not be sunk when created" do
-    expect(ship).not_to be_sunk
+    expect(dinghy).not_to be_sunk
   end
 
   it "will sink if hit enough times" do
-    large_ship.hit
-    large_ship.hit
-    expect(large_ship).to be_sunk
+    patrol_boat.hit
+    patrol_boat.hit
+    expect(patrol_boat).to be_sunk
   end
 
 
