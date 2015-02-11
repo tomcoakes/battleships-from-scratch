@@ -4,7 +4,7 @@ describe Board do
   let(:board) {Board.new}
   let(:ship) {double :ship, sunk?: false}
   let(:destroyed_ship) {double :destroyed_ship, sunk?: true}
-  let(:shot) {double :shot, is_a?: :Shot}
+  let(:shot) {double :shot}
 
   it "has a grid" do
     expect(board).to respond_to(:grid)
@@ -24,28 +24,31 @@ describe Board do
   end
 
   it "tells a shot that it was a miss when placed in water" do
+    allow(shot).to receive(:is_a?).and_return(true)
     expect(shot).to receive(:register_miss) 
     board.add_to_cell(0, 0, shot)
   end
 
   it "tells a shot that it was a hit when placed on a ship" do
     board.add_to_cell(1, 0, ship)
+    allow(shot).to receive(:is_a?).and_return(true)
     expect(shot).to receive(:register_hit)
-    expect(ship).to receive(:hit)
+    allow(ship).to receive(:hit)
     board.add_to_cell(1, 0, shot)
   end
 
   it "tells a ship that it was hit" do
     board.add_to_cell(0, 0, ship)
-    expect(shot).to receive(:register_hit)
+    allow(shot).to receive(:is_a?).and_return(true)
+    allow(shot).to receive(:register_hit)
     expect(ship).to receive(:hit)
     board.add_to_cell(0, 0, shot)
   end
 
   it "knows how many ships remain on the board" do
-    allow(ship).to receive(:is_a?).and_return(false)
+    allow(ship).to receive(:is_a?).with(Shot).and_return(false)
     board.add_to_cell(0, 0, ship)
-    allow(ship).to receive(:is_a?).and_return(true)
+    allow(ship).to receive(:is_a?).with(Ship).and_return(true)
     expect(board.ships_remaining).to eq(1)
   end
 
@@ -57,12 +60,14 @@ describe Board do
     expect(ship).not_to be_sunk
   end
 
-  # it "updates the number of remaining ships when a ship is destroyed" do
-  #   board.add_to_cell(0, 0, ship)
-  #   expect(shot).to receive(:register_hit)
-  #   expect(ship).to receive(:hit)
-  #   board.add_to_cell(0, 0, shot)
-  #   expect(board.ships_remaining).to eq(0)
-  # end
+  it "updates the number of remaining ships when a ship is destroyed" do
+    board.add_to_cell(0, 0, ship)
+    allow(shot).to receive(:is_a?).with(Shot).and_return(true)
+    allow(shot).to receive(:register_hit)
+    allow(ship).to receive(:hit)
+    board.add_to_cell(0, 0, shot)
+    allow(shot).to receive(:is_a?).with(Ship).and_return(false)
+    expect(board.ships_remaining).to eq(0)
+  end
 
 end
