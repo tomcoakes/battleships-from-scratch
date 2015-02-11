@@ -17,6 +17,8 @@ class Board
     grid[y][x] = obj
   end
 
+private
+
   def register_hit_or_miss(y, x, obj, currently_on_cell)
     if obj.is_a?(Shot)
       if grid[y][x] == :w
