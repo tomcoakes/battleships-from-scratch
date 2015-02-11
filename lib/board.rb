@@ -12,13 +12,20 @@ class Board
   end
 
   def add_to_cell(y, x, obj)
-    register_hit_or_miss(y, x, obj)
+    currently_on_cell = grid[y][x]
+    register_hit_or_miss(y, x, obj, currently_on_cell)
     grid[y][x] = obj
   end
 
-  def register_hit_or_miss(y, x, obj)
+  def register_hit_or_miss(y, x, obj, currently_on_cell)
     if obj.is_a?(Shot)
-      grid[y][x] == :w ? obj.register_miss : obj.register_hit
+      if grid[y][x] == :w
+        obj.register_miss
+      else
+        obj.register_hit
+        currently_on_cell.hit
+      end
+
     end
   end
 

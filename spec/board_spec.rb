@@ -22,10 +22,6 @@ describe Board do
     expect(board.grid).to eq([[:w,:w],[ship,:w]])
   end
 
-  # it "can check what is currently in a cell before placement" do
-  #   board.add_to_cell
-  # end
-
   it "tells a shot that it was a miss when placed in water" do
     expect(shot).to receive(:register_miss) 
     board.add_to_cell(0, 0, shot)
@@ -34,7 +30,15 @@ describe Board do
   it "tells a shot that it was a hit when placed on a ship" do
     board.add_to_cell(1, 0, ship)
     expect(shot).to receive(:register_hit)
+    expect(ship).to receive(:hit)
     board.add_to_cell(1, 0, shot)
+  end
+
+  it "tells a ship that it was hit" do
+    board.add_to_cell(0, 0, ship)
+    expect(shot).to receive(:register_hit)
+    expect(ship).to receive(:hit)
+    board.add_to_cell(0, 0, shot)
   end
 
 end
