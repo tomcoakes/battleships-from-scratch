@@ -4,4 +4,8 @@ class Player
     board.add_to_cell(y, x, ship)
   end
 
+  def take_shot(y, x, shot, board)
+    board.add_to_cell(y, x, shot)
+  end
+
 end

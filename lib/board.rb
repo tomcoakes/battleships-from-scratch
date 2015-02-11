@@ -13,8 +13,9 @@ class Board
 
   def add_to_cell(y, x, obj)
     currently_on_cell = grid[y][x]
-    register_hit_or_miss(y, x, obj, currently_on_cell) if obj.is_a?(Shot)
+    send_feedback = register_hit_or_miss(y, x, obj, currently_on_cell) if obj.is_a?(Shot)
     grid[y][x] = obj
+    send_feedback
   end
 
   def ships_remaining
@@ -40,10 +41,12 @@ private
 
   def register_hit_or_miss(y, x, obj, currently_on_cell)
       if grid[y][x] == :w
-        obj.register_miss
+        send_feedback = obj.register_miss
+        send_feedback
       else
-        obj.register_hit
+        send_feedback = obj.register_hit
         currently_on_cell.hit
+        send_feedback
       end
   end
 
