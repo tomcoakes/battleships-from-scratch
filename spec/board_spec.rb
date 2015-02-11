@@ -1,6 +1,7 @@
 require 'board'
 
 describe Board do
+  
   let(:board) {Board.new}
   let(:ship) {double :ship, sunk?: false}
   let(:destroyed_ship) {double :destroyed_ship, sunk?: true}
