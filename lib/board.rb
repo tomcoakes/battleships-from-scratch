@@ -19,12 +19,10 @@ class Board
 
   def ships_remaining
     @remaining = 0
-    grid.each do |first_level|
-      first_level.each do |cell|
-        if cell.is_a?(Ship)
-          if !ship_sunk?(cell)
-            @remaining += 1
-          end
+    grid.each do |y_position|
+      y_position.each do |x_position|
+        if x_position.is_a?(Ship)
+          @remaining += 1 if !ship_sunk?(x_position)
         end
       end
     end
