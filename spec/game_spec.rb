@@ -30,13 +30,13 @@ describe Game do
 
   it "declares player 1 as the winner when player 2's ships are all sunk" do
     battleships.player2.place_ship(0, 0, Ship.dinghy)
-    battleships.shoot(battleships.player1, 0, 0, Shot.new)
+    battleships.shoot(battleships.player1, 0, 0, shot)
     expect(battleships.check_if_winner(battleships.player1)).to eq("You've won!")
   end
 
   it "declares player 2 as the winner when player 1's ships are all sunk" do
     battleships.player1.place_ship(0, 0, Ship.dinghy)
-    battleships.shoot(battleships.player2, 0, 0, Shot.new)
+    battleships.shoot(battleships.player2, 0, 0, shot)
     expect(battleships.check_if_winner(battleships.player2)).to eq("You've won!")
   end
 
@@ -46,7 +46,7 @@ describe Game do
 
   it "knows the game has ended when a player has no ships left" do
     battleships.player2.place_ship(0, 0, Ship.dinghy)
-    battleships.shoot(battleships.player1, 0, 0, Shot.new)
+    battleships.shoot(battleships.player1, 0, 0, shot)
     expect(battleships).to be_over
   end
 
