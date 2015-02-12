@@ -22,16 +22,4 @@ describe Player do
     player.take_shot(0, 0, shot, board)
   end
 
-  it "returns 'You missed!' when a shot misses" do
-    expect(board).to receive(:add_to_cell).with(0, 0, shot).and_return("You missed!")
-    expect(player.take_shot(0, 0, shot, board)).to eq("You missed!")
-  end
-
-  it "returns 'You hit a ship!' when a shot misses" do
-    expect(player.board).to receive(:add_to_cell).with(0, 0, ship)
-    player.place_ship(0, 0, ship)
-    expect(board).to receive(:add_to_cell).with(0, 0, shot).and_return("You hit a ship!")
-    expect(player.take_shot(0, 0, shot, board)).to eq("You hit a ship!")
-  end
-
 end

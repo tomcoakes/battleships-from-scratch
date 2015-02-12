@@ -37,12 +37,10 @@ class Board
     ship.sunk?
   end
 
-private
 
   def register_hit_or_miss(y, x, obj, currently_on_cell)
       if grid[y][x] == :w
         send_feedback = obj.register_miss
-        send_feedback
       else
         send_feedback = obj.register_hit
         currently_on_cell.hit
