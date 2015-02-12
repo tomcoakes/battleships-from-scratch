@@ -7,10 +7,10 @@ class Game
     @player2 = players[1]
   end
 
-  def player_shoots(player, y, x, shot)
+  def shoot(player, y, x, shot)
     did_it_hit = player.take_shot(y, x, shot, opponents_board(player))
     have_they_won = check_if_winner(player)
-    shot_feedback = [did_it_hit, have_they_won].compact.join(' ')
+    return [did_it_hit, have_they_won].compact.join(' ')
   end
 
   def opponents_board(player)
