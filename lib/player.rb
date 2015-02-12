@@ -2,8 +2,13 @@ class Player
 
   attr_reader :board
 
-  def initialize
+  def initialize(with_ships)
     @board = Board.new
+    @ships = with_ships
+  end
+
+  def ships
+    @ships ||= []
   end
 
   def place_ship(y, x, ship)

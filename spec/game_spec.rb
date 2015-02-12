@@ -2,8 +2,9 @@ require 'game'
 
 describe Game do
 
+  let(:ship) {double :ship}
   let(:player) {double :player}
-  let(:battleships) {Game.new([Player.new, Player.new])}
+  let(:battleships) {Game.new([Player.new(ship), Player.new(ship)])}
   let(:shot) {double :shot}
 
   it "creates two players when the game is initialized" do
