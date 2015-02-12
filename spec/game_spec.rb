@@ -19,13 +19,13 @@ describe Game do
   it "returns 'You missed!' when a shot misses" do
     battleships.player1.place_ship(0, 0, Ship.dinghy)
     allow(battleships.player1.board).to receive(:add_to_cell).and_return("You missed!")
-    expect(battleships.shoot(battleships.player2, 1, 0, shot)).to eq("You missed!")
+    expect(battleships.shoot(battleships.player2, 1, 0, shot)).to eq("You missed! Now it's player one's turn.")
   end
 
   it "returns 'You hit a ship!' when a shot misses" do
     battleships.player1.place_ship(0, 0, Ship.dinghy)
     allow(battleships.player2).to receive(:take_shot).and_return("You hit a ship!")
-    expect(battleships.shoot(battleships.player2, 0, 0, shot)).to eq("You hit a ship!")
+    expect(battleships.shoot(battleships.player2, 0, 0, shot)).to eq("You hit a ship! Now it's player one's turn.")
   end
 
   it "declares player 1 as the winner when player 2's ships are all sunk" do
@@ -50,8 +50,22 @@ describe Game do
     expect(battleships).to be_over
   end
 
-  # it "switch to player 1's turn after player 2 takes a shot" do
-  #   battleships.player1.place_ship(0, 0, Ship.dinghy)
-  #   expect(battleships.shoot(battleships.player2, 0, 1, Shot.new)).to eq("It's now player 1's turn to shoot")
-  # end
+  it "switches to player 1's turn after player 2 takes a shot" do
+    battleships.player1.place_ship(0, 1, Ship.dinghy)
+    battleships.shoot(battleships.player2, 0, 0, shot)
+    expect(battleships.current_player).to eq(battleships.player1)
+  end
+
+  it "switches to player 2's turn after player 1 takes a shot" do
+    battleships.player2.place_ship(0, 1, Ship.dinghy)
+    battleships.shoot(battleships.player1, 0, 0, shot)
+    expect(battleships.current_player).to eq(battleships.player2)
+  end
+
+  it "won't switch the player if shot was the final shot of the game" do
+    battleships.player1.place_ship(0, 0, Ship.dinghy)
+    battleships.shoot(battleships.player2, 0, 0, shot)
+    expect(battleships).not_to receive(:switch_player)
+  end
+
 end
