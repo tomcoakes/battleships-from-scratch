@@ -2,7 +2,8 @@ require 'game'
 
 describe Game do
 
-  let(:battleships) {Game.new}
+  let(:player) {double :player}
+  let(:battleships) {Game.new([Player.new, Player.new])}
   let(:shot) {double :shot}
 
   it "creates two players when the game is initialized" do
@@ -21,12 +22,11 @@ describe Game do
     expect(battleships.player_shoots(battleships.player2, 1, 0, shot)).to eq("You missed!")
   end
 
-  # it "returns 'You hit a ship!' when a shot misses" do
-  #   expect(player.board).to receive(:add_to_cell).with(0, 0, ship)
-  #   player.place_ship(0, 0, ship)
-  #   expect(board).to receive(:add_to_cell).with(0, 0, shot).and_return("You hit a ship!")
-  #   expect(player.take_shot(0, 0, shot, board)).to eq("You hit a ship!")
-  # end
+  it "returns 'You hit a ship!' when a shot misses" do
+    battleships.player1.place_ship(0, 0, Ship.dinghy)
+    allow(battleships.player2).to receive(:take_shot).and_return("You hit a ship!")
+    expect(battleships.player_shoots(battleships.player2, 0, 0, shot)).to eq("You hit a ship!")
+  end
 
   it "declares player 1 as the winner when player 2's ships are all sunk" do
     battleships.player2.place_ship(0, 0, Ship.dinghy)
@@ -40,9 +40,15 @@ describe Game do
     expect(battleships.check_if_winner(battleships.player2)).to eq("You've won!")
   end
 
-  # it "ends the game once a player has won" do
+  it "knows the game hasn't ended whilst both players' ships remain" do
+    expect(battleships).not_to be_over
+  end
 
-  # end
+  it "knows the game has ended when a player has no ships left" do
+    battleships.player2.place_ship(0, 0, Ship.dinghy)
+    battleships.player_shoots(battleships.player1, 0, 0, Shot.new)
+    expect(battleships).to be_over
+  end
 
   # it "switch to player 1's turn after player 2 takes a shot" do
   #   battleships.player1.place_ship(0, 0, Ship.dinghy)

@@ -2,9 +2,9 @@ class Game
 
   attr_reader :player1, :player2
 
-  def initialize
-    @player1 = Player.new
-    @player2 = Player.new
+  def initialize(players)
+    @player1 = players[0]
+    @player2 = players[1]
   end
 
   def player_shoots(player, y, x, shot)
@@ -20,8 +20,13 @@ class Game
 
   def check_if_winner(player)
     if opponents_board(player).ships_remaining == 0
+      @over = true
       "You've won!"
     end
+  end
+
+  def over?
+    @over ||= false
   end
 
 end
