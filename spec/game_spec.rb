@@ -28,6 +28,7 @@ describe Game do
     battleships.player1.place_ship(0, 0, ship)
     allow(battleships.player2).to receive(:take_shot).and_return("You hit a ship!")
     expect(battleships.shoot(battleships.player2, 0, 0, shot)).to eq("You hit a ship! Now it's player one's turn.")
+    # this isn't doing anything
   end
 
   it "declares player 1 as the winner when player 2's ships are all sunk" do
