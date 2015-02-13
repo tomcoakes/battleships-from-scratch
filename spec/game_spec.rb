@@ -7,6 +7,11 @@ describe Game do
   let(:battleships) {Game.new([Player.new(ship), Player.new(ship)])}
   let(:shot) {double :shot}
 
+  before do
+    allow(ship).to receive(:include?).and_return(true)
+    allow(ship).to receive(:delete)
+  end
+
   it "creates two players when the game is initialized" do
     expect(battleships.player1).to respond_to(:place_ship)
     expect(battleships.player2).to respond_to(:place_ship)
