@@ -18,6 +18,15 @@ describe Player do
     player.place_ship(0, 0, ship)
   end
 
+  xit "can only place ships that it still has available" do
+    ships = [:patrol_boat]
+    player = Player.new(ships)
+    expect{player.place_ship(0, 0, :dinghy)}.to raise_error("You don't have any of those boats!")
+  end
+
+  xit "can't place a ship twice" do
+  end
+
   it "can take shots at a board" do
     player = Player.new(ship)
     expect(board).to receive(:add_to_cell).with(0, 0, shot)
